@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="gov.nasa.neacc.cima.smapPlugin" version="1.1.0">
+    <name>SMAP</name>
+    <description>CIMA SMAP Plugin</description>
+    <js-module src="www/smapPlugin-1.1.0.js" name="smap"> <!-- name doesn't really matter here -->
+        <clobbers target="smap" /> <!-- module.exports is inserted into window object at window.Smap -->
+    </js-module>
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="SMAP"> <!-- Matches the third parameter to the cordova.exec call in smapPlugin.js --> 
+                <param name="ios-package" value="SMAPPlugin"/> <!-- Matches the Objective C subclass of CDVPlugin -->
+            </feature>
+        </config-file>
+        <header-file src="src/ios/SMAPPlugin.h" />
+        <source-file src="src/ios/SMAPPlugin.m" />
+        <header-file src="src/ios/SmapPluginConfiguration.h" />
+        <source-file src="src/ios/SmapPluginConfiguration.m" />
+        <framework src="src/ios/CIMA.framework" custom="true"/> <!-- Copy and add CIMA framework to project -->
+        <resource-file src="src/ios/CIMAResources.bundle"/>
+        <!-- add framework and library dependencies for CIMA -->
+        <source-file src="src/ios/libssl.a" framework="true" />
+        <source-file src="src/ios/libcrypto.a" framework="true" />
+        <framework src="AVFoundation.framework"/>
+        <framework src="CoreLocation.framework"/>
+        <framework src="CoreTelephony.framework"/>
+        <framework src="Security.framework"/>
+        <framework src="SystemConfiguration.framework"/>
+        <framework src="CoreText.framework"/>
+        <framework src="libz.dylib"/>
+    </platform>
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="SMAP">
+                <param name="android-package" value="gov.nasa.cima.smap.cordova.SmapPlugin"/>
+            </feature>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:launchMode="singleTop" android:name="gov.nasa.cima.smap.ui.login.LoginActivity">
+              
+            </activity> 
+            <activity android:name="gov.nasa.cima.smap.ui.login.LoginWithPasswordActivity" />
+            <activity android:name="gov.nasa.cima.smap.ui.login.LoginWithPinActivity" />
+            <activity android:name="gov.nasa.cima.smap.ui.login.CreatePinActivity" />
+            <activity android:name="gov.nasa.cima.smap.ui.login.ConfirmPinActivity" />
+            <meta-data android:name="environment" android:value="test" />
+            <meta-data android:name="cimaApplicationName" android:value="Test" />
+            <meta-data android:name="cimaLogServerLevel" android:value="WARN" />           
+        </config-file>       
+        <source-file src="src/android/smapAndroid-1.0.0.aar" target-dir="aars"/>
+        <source-file src="src/android/SmapPlugin.java" target-dir="src/gov/nasa/cima/smap/cordova"/>
+        <source-file src="src/android/CordovaApplication.java" target-dir="src/gov/nasa/cima/example"/>
+        <resource-file src="src/android/build-extras.gradle" target="build-extras.gradle" />
+    </platform>
+</plugin>

@@ -1,0 +1,15 @@
+Create new project:
+In the properties tab, change Cordova Version to 4.0.0
+In the plugins tab, disable all the plugins to speed up the build
+Add the custom plugin zip file
+
+1) In Telerik: plugin-install-dir/src/android, modify the first line of CordovaApplication.java to match the Application ID/Java Package for this project
+2) Modify Android manifest by right clicking in the project navigator and choosing edit configuration -> Android Manifest
+ a) to the application element, add 
+ 	android:name="com.telerik.Example.CordovaApplication" android:theme="@style/Theme.AppCompat.Light"
+ 	(replace the com.telerik.Example part to match the Application ID/Java Package for this project)
+ b) remove the intent-filter element
+3) Modify HTML as needed
+
+Run -> Build as App Package
+

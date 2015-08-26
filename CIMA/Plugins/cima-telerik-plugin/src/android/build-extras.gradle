@@ -1,0 +1,11 @@
+repositories {
+    flatDir {
+        dirs 'aars'
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'gov.nasa.cima.smap:smapAndroid:1.0.0@aar'
+}

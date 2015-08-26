@@ -1,0 +1,6 @@
+framework module CIMA {
+  umbrella header "CIMA.h"
+
+  export *
+  module * { export * }
+}
